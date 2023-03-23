@@ -1,0 +1,981 @@
+metadata:
+  title: |
+    LAWV Retainer
+  short title: |
+    LAWV Retainer
+  description: |
+    This interview allows advocates to generate, sign,
+    and email a retainer agreement to a client and receive
+    a signed copy back.
+  authors:
+    - name: Dane W. Henry, Esq.
+      organization: Legal Aid of West Virginia, Inc.
+  revision_date: 2023-03-23
+---
+objects:
+  - a: Individual
+  - b: Individual
+  - c: Individual
+  - custodian: Individual
+  - endpoint: DADict
+---
+terms:
+  Free Services, Costs and Payments: |
+    Legal services will be provided to me free of charge by Legal Aid of West Virginia. 
+    My case may involve expenses for court fees, obtaining medical records, paying for process 
+    servers and other charges or fees. Legal Aid will try to have these expenses waived or paid
+     by the other side in this case. If the costs cannot be waived or paid by someone else, I will 
+     pay them unless I am not able to do so. If I cannot pay the costs, Legal Aid may pay these charges 
+     for me. I will pay Legal Aid back for costs they pay in my case from any back benefits or damages 
+     recovered, although I understand Legal Aid will not take action to collect these costs from me 
+     if that would cause me or my family undue hardship.
+  Settlement Decisions: |
+    Legal Aid of West Virginia will not settle my case without my agreement in advance, unless 
+    I have authorized specific settlement terms in advance.
+  Right to End Representation: |
+    I can tell Legal Aid of West Virginia to stop representing me any time I want to do so, for any reason.
+  Confidentiality and Disclosure of Information: |
+    Legal Aid of West Virginia is a law firm. As a client of Legal Aid of West Virginia, I will make 
+    available all the information I have relating to my case or my legal questions. As a client of Legal Aid 
+    of West Virginia, my information is confidential. Confidential information will not be disclosed to 
+    anyone who is not on the staff of Legal Aid of West Virginia without my permission, except as permitted 
+    or required by the Rules of Professional Conduct, the legal ethics rules of West Virginia.Legal Aid 
+    of WV may ask attorneys to assist me through its Pro Bono Program. I authorize Legal Aid of WV to 
+    share my information with these attorneys or firms.
+  Accurate Information, New Information and Changes in Information: |
+    Everything I have told Legal Aid of West Virginia about my case is true as far as I know. I will 
+    tell Legal Aid promptly if I find new information out about my case or if there are new incidents 
+    to report. I understand it is my responsibility to tell Legal Aid of West Virginia immediately 
+    about changes in my address, telephone number, my family income or the size of my household.
+  Legal Aid’s Right to End Representation: |
+    Legal Aid of West Virginia may stop representing me, but only when there is a good reason for 
+    doing that. If I do not cooperate with instructions Legal Aid gives me, don't provide complete 
+    or truthful information about my case, don't stay in touch with Legal Aid or if I do not report 
+    changes in my phone number, address or income, Legal Aid may have to stop helping me. Legal Aid 
+    will only stop representing me after making all reasonable efforts to tell me the reason and giving 
+    me a chance to explain why representation should not be ended.
+  Right to Make a Complaint: |
+    I can make a complaint if I do not understand or approve of the work being done on my case or if 
+    Legal Aid of West Virginia says it will stop representing me. Legal Aid will provide me a copy of 
+    the “Statement of Client Rights” describing the procedure for making a complaint anytime I ask for one.
+  Communication with Opposing Party: |
+    I will not talk to the other side's lawyer without first having permission to do that from Legal Aid 
+    of West Virginia. I will call Legal Aid right away if the attorney representing the other side tries 
+    to talk to me.
+  Copy of Agreement: |
+    Legal Aid of West Virginia will give me a copy of this Retainer Agreement when it is signed by Legal 
+    Aid of West Virginia, or at my request.
+  Parties to the Retainer: |
+    I understand that this agreement is between my and my advocate.
+  Advocate is not an attorney: |
+    I understand that my advocate is **NOT** an **ATTORNEY**.
+  Transfer to an attorney: |
+    I understand that I can request my case be referred to an attorney if issues arise that would meet the level of need for an attorney.
+  Limitation of transferring to an attorney: |
+    I understand that if my case is referred to an attorney that I will only be provided an attorney if I meet program guidelines, and if the attorney agrees to take my case after I have a consultation with the attorney.
+  Free Services and costs: |
+    I understand that assistance will be provided to me for free by Legal Aid of West Virginia. If there are costs that cannot be waived, Legal Aid may ask me to pay them if I am able. If I am not able, Legal Aid might be able to pay these costs.
+  Confidentiality: |
+    I understand that my information is confidential. Legal Aid of West Virginia will not disclose my confidential information without my permission, except as permitted or required by the legal ethical rules of West Virginia.
+  Changes to information: |
+    I understand it is my responsibility to keep Legal Aid and my advocate aware of any changes in my contact information.
+  Right to discontinue: |
+    I understand that I may discontinue services at any time. Discontinuing services does not affect my ability to request services in the future.
+  Right to a complaint: |
+    I understand that I have a right to file a complaint about the services I am receiving.
+  Legal Aid’s right to discontinue: |
+    Legal Aid of West Virginia may discontinue advocacy services or stop representing me before the completion of my case, but only when there is a good reason for doing that. Good reason includes but is not limited to; if I do not provide complete or truthful information about my case, don't stay in touch with Legal Aid or if I do not report changes in my phone number, address or income, Legal Aid may have to stop helping me. Legal Aid will only stop representing me after telling me the reason and giving me a chance to explain why advocacy services should not be ended.
+  Child or dependent as FAST client: |
+    I have been counseled that my child/dependent is the client of FAST and as their parent/guardian I am authorized to make decisions on their behalf. However, if there comes a point in the process where the advocate determines that the decisions I am making are not in their client's best interest, the advocate may discontinue advocacy services, but only after discussing the issue with me.
+  Child or dependent as BHA client: |
+    I have been counseled that my dependent/principal is the client of the Behavioral Health Advocacy program and as their guardian/legal representative I am authorized to make decisions for them or on their behalf. However, if there comes a point in the process where the advocate determines that the decisions I am making are not in their client's best interest, the advocate may discontinue advocacy services, but only after discussing the issue with me.
+  Provide documentation: |
+    I understand that I must provide Legal Aid of West Virginia with a copy of legal documentation that gives me decision making authority. I also understand that should that authority be removed, I am required to inform the advocate immediately.
+---
+mandatory: True
+code: |
+  multi_user = True
+  attorney_setup  
+  if not birthdays_match:
+    failure_reason = "Sorry the birthday you entered did not match."
+    challenge_fail
+  if retainer == 'bha':
+    if bha_review == 'reject':
+      if defined(b):
+        recipients = [a,b]
+      else:
+        recipients = [a]
+      send_email(to=recipients,template=client_reject)      
+      reject
+  elif retainer == 'fast':
+    if fast_review == 'reject':
+      if defined(b):
+        recipients = [a,b]
+      else:
+        recipients = [a]
+      send_email(to=recipients,template=client_reject)      
+      reject
+  else:
+    if client_review == 'reject':
+      if defined(b):
+        recipients = [a,b]
+      else:
+        recipients = [a]
+      send_email(to=recipients,template=client_reject)      
+      reject
+  c_method
+  if c_method == 'type':
+    if (retainer == 'bha' or retainer == 'fast') and custodian_present == True:
+      c.signature = '/s/ ' + custodian.name.full()
+    else:
+      c.signature = '/s/ ' + c.name.full()
+  date = current_datetime()
+  c.signature
+  final_screen  
+---
+ga id: roleSelect
+question: |
+  Select your role
+field: role_select
+choices:
+  - Attorney or BHA/FAST Advocate: advocate
+  - Paralegal on behalf of attorney or FAST/BHA: para_behalf
+  - Paralegal for own client: para_self
+  - Legal Assistant on behalf of attorney or FAST/BHA: la_attorney
+  - Legal Assistant on behalf of paralegal: la_para
+---
+ga id: behalfOfInfo
+question: |
+  First, enter your information
+subquestion: |
+  Your information is needed to get a copy of the signed retainer
+  without needing to go to the attorney or paralegal.
+fields:
+  - First Name: b.name.first
+  - Last Name: b.name.last
+  - Email Address: b.email
+    datatype: email 
+---
+ga id: attorneyInfo
+question: |
+  % if role_select == "advocate" or role_select == "para_self":
+    First, enter your information
+  % else:
+    First, enter the information of the person for whom you are completing the retainer
+  % endif
+subquestion: |
+  The information is needed to get the signed retainer
+  agreement back from the client.
+fields:
+  - First Name: a.name.first
+  - Last Name: a.name.last
+  - Email Address: a.email
+    datatype: email
+---
+ga id: clientInfo
+question: |
+  Now, enter some information about the client
+subquestion: |
+  Information about the client is used to make sure
+  the person who receives the retainer is the client
+
+  **For BHA/FAST: If the client is a minor or under a guardianship, 
+  still put the client's name/birthdate here.  You will have the opportunity to
+  specify the custodian's name later in the process.**
+fields:
+  - First Name: c.name.first
+  - Last Name: c.name.last
+  - Birthdate: c.birthdate
+    datatype: date
+  - Email Address: c.email
+    datatype: email
+---
+ga id: citizenship
+question: |
+  Is the client a U.S. Citizen?
+yesno: citizen
+---
+question: |
+  You must complete the Non-Citizen Status Questionnaire
+subquestion: |
+  Remember that non-citizen applicants and clients must qualify
+  under LSC regulations.  
+  
+  A copy of the questionnaire can be found
+  below:
+  
+  [[FILE non_citizen_status_worksheet.png]](${ url_of('non_citizen_status_worksheet.pdf') })
+continue button field: reminder
+---
+ga id: retainerType
+question: |
+  Please select the type of retainer
+field: retainer
+choices:
+  - English Legal Retainer (Full or Limited): english
+  - Spanish Legal Retainer (Full or Limited): spanish
+  - FAST Advocate Retainer: fast
+  - BHA Advocate Retainer: bha
+---
+ga id: legalRetainerType
+question: |
+  Should the retainer be full or limited?
+subquestion: |
+  Full retainers mean you will be appearing in-person on
+  behalf of the client, though the retainer can still limit
+  the scope of the employment (ie: Divorce but not QRDO).
+
+  Limited retainers are for counsel and advice, ghostwriting, etc.
+field: legal_retainer
+buttons:
+  - Full
+  - Limited
+---
+ga id: limitedDetail
+question: |
+  Select all that apply
+fields:
+  - no label: limited_options
+    datatype: checkboxes
+    choices:
+      - Interview and Advice: advice
+      - Investigation to determine whether I have a case: investigate
+      - Contact the other side to try to settle the dispute, but with no obligation to represent me in court if the dispute is not resolved: contact      
+      - Help filling out legal forms: fill_form
+      - Preparing documents or court papers for me to file on my own: prep_docs
+      - Other: other
+    none of the above: False
+  - Describe: other_detail
+    show if: limited_options['other']
+---
+ga id: fastOptions
+question: |
+  What is the level of services FAST will provide?
+subquestion: |
+  Select all that apply
+fields:
+  - no label: fast_options
+    datatype: checkboxes
+    choices:
+      - Provide advice and guidance so I can advocate for my child on my own.: advice
+      - Review my child's records and provide advice so I can advocate for my child on my own.: review
+      - Review my child's records and assess for possible advocacy and/or complaints.: review_complaint
+      - Advocate on my child's behalf for Eligibility Determination to see if my child qualifies for special education services.: spec_ed
+      - Advocate on my child's behalf regarding my child's IEP or 504 plan.: iep
+      - Advocate on my child's behalf regarding my child's behavior support plan.: behavior
+      - File a state complaint or Office of Civil Rights complaint on behalf of my child.: file_complaint
+      - Attend and advocate on my child's behalf at a manifestation meeting.: meeting
+      - Other: other
+    none of the above: False
+  - Describe: fast_other_detail
+    show if: fast_options['other']
+---
+ga id: bhaOptions
+question: |
+  What is the level of services BHA will provide?
+subquestion: |
+  Select all the apply
+fields:
+  - no label: bha_options
+    datatype: checkboxes
+    choices:
+      - Mental Health, Behavioral Health, and/or Substance Use Disorder treatment provider/services: mental
+      - Housing Issues: housing
+      - Social Security Issues: ssa
+      - Guardian, Payee, and/or Conservator Issues: payment
+      - Treatment Planning: treatment
+      - Other: other
+    none of the above: False
+  - Describe: bha_other_detail
+    show if: bha_options['other']
+---
+ga id: custodianInfo
+question: |
+  Does ${ c.name.full() } have a custodian?
+subquestion: |
+  A custodian can be a parent, guardian, or other person who will sign
+  on the client's behalf.
+fields:
+  - no label: custodian_present
+    datatype: yesnoradio
+  - First Name: custodian.name.first
+    show if: custodian_present
+  - Last Name: custodian.name.last
+    show if: custodian_present
+---
+ga id: retainerScope
+question: |
+  Please provide the scope of the retainer
+subquestion: |
+  This applies whether the retainer is limited or full
+fields:
+  - no label: legal_scope
+    input type: area
+    maxlength: 1200
+---
+ga id: attorneySignature
+question: |
+  How would you like the name signed?
+subquestion: |
+  **Typed** will insert '/s/ ${ a.name.full()}'
+
+  **Digitally Sign** will allow you to use the mouse, trackpad,
+  or finger (device depending) to sign your name
+field: a_method
+choices:
+  - Type: type
+  - Digitally Sign: sign
+under: |
+  After you sign, an email will be generated
+  to the client for them to sign, then a copy
+  will be provided to both of you.
+---
+ga id: attorneyDigitalSignature
+question: |
+  Sign your name
+signature: a.signature
+under: |
+  ${ a.name.full() }
+---
+ga id: clientBirthday
+question: |
+  % if defined('custodian.name.first'):
+  Please enter the client's birthday
+  % else:
+  Please enter your birthday
+  % endif
+fields:
+  - no label: challenge
+    datatype: date
+---
+ga id: fastRetainerReview
+question: |
+  FAST Retainer Review
+subquestion: |
+  ${ role } ${ a.name.full() } is going to assist:
+
+  ${ c.name.full() }
+
+  Specifically, the ${ role } is going to:
+
+  % if fast_options['advice']:
+  * Provide advice and guidance so I can advocate for my child on my own;
+  % endif 
+  % if fast_options['review']:
+  * Review my child's records and provide advice so I can advocate for my child on my own; 
+  % endif
+  % if fast_options['review_complaint']:
+  * Review my child's records and assess for possible advocacy and/or complaints;
+  % endif
+  % if fast_options['spec_ed']:
+  * Advocate on my child's behalf for Eligibility Determination to see if my child qualifies for special education services; 
+  % endif
+  % if fast_options['iep']:
+  * Advocate on my child's behalf regarding my child's IEP or 504 plan;
+  % endif
+  % if fast_options['behavior']:
+  * Advocate on my child's behalf regarding my child's behavior support plan;
+  % endif
+  % if fast_options['file_complaint']:
+  * File a state complaint or Office of Civil Rights complaint on behalf of my child;
+  % endif
+  % if fast_options['meeting']:
+  * Attend and advocate on my child's behalf at a manifestation meeting;
+  % endif
+  % if defined('fast_other_detail'):
+  * Other - ${ fast_other_detail }
+  % endif
+  
+  Finally, the retainer agreement has the following terms:
+
+  % if citizen:
+  * You are a U.S. Citizen;
+  % endif
+  * **{Parties to the Retainer}**;
+  * **{Advocate is not an attorney}**;
+  * **{Transfer to an attorney}**;
+  * **{Limitation of transferring to an attorney}**;
+  * **{Free Services and costs}**;
+  * **{Confidentiality}**;
+  * **{Changes to information}**;
+  * **{Right to discontinue}**;
+  * **{Right to a complaint}**;
+  * **{Legal Aid’s right to discontinue}**;
+  % if custodian_present == True:
+  * **{Child or dependent as FAST client}**;
+  % endif
+  * **{Copy of Agreement}**
+
+  You can also view a blank, unsigned copy of the retainer [here](${url_of('fast_sample.pdf')})
+
+  ---
+
+field: fast_review
+Buttons:
+  - I Agree: agree
+  - I Reject: reject
+under: |
+  **Note**: Rejecting the terms does not force the ${ role } to alter the scope of representation.
+  A notice will be sent to the ${ role } notifying them you do not accept the terms and this
+  interview will close.
+---
+ga id: bhaRetainerReview
+question: |
+  BHA Retainer Review
+subquestion: |
+  ${ role } ${ a.name.full() } is going to assist:
+
+  ${ c.name.full() }
+
+  Specifically, the ${ role } is going to:
+
+  % if bha_options['mental']:
+  * Mental Health, Behavioral Health, and/or Substance Use Disorder treatment provider/services;
+  % endif 
+  % if bha_options['housing']:
+  * Housing Issues; 
+  % endif
+  % if bha_options['ssa']:
+  * Social Security Issues;
+  % endif
+  % if bha_options['payment']:
+  * Guardian, Payee, and/or Conservator Issues; 
+  % endif
+  % if bha_options['treatment']:
+  * Treatment Planning;
+  % endif
+  % if defined('bha_other_detail'):
+  * Other - ${ bha_other_detail }
+  % endif
+  
+  Finally, the retainer agreement has the following terms:
+
+  % if citizen:
+  * You are a U.S. Citizen;
+  % endif
+  * **{Parties to the Retainer}**;
+  * **{Advocate is not an attorney}**;
+  * **{Transfer to an attorney}**;
+  * **{Limitation of transferring to an attorney}**;
+  * **{Free Services and costs}**;
+  * **{Confidentiality}**;
+  * **{Changes to information}**;
+  * **{Right to discontinue}**;
+  * **{Right to a complaint}**;
+  * **{Legal Aid’s right to discontinue}**;
+  % if custodian_present == True:
+  * **{Child or dependent as BHA client}**;
+  * **{Provide documentation}**;
+  % endif
+  * **{Copy of Agreement}**
+
+  You can also view a blank, unsigned copy of the retainer [here](${url_of('bha_sample.pdf')})
+
+  ---
+
+field: bha_review
+Buttons:
+  - I Agree: agree
+  - I Reject: reject
+under: |
+  **Note**: Rejecting the terms does not force the ${ role } to alter the scope of representation.
+  A notice will be sent to the ${ role } notifying them you do not accept the terms and this
+  interview will close.
+---
+ga id: legalRetainerReview
+question: |
+  Retainer Review
+subquestion: |
+  ${ role } ${ a.name.full() } is going to assist with the following:
+
+  ${ legal_scope }
+
+  % if defined('limited_options'):
+  Specifically, the ${ role } is going to:
+
+  % if limited_options['advice']:
+  * Interview and provide advice;
+  % endif 
+  % if limited_options['investigate']:
+  * Investigate to determine whether I have a case; 
+  % endif
+  % if limited_options['contact']:
+  * Contact the other side to try to settle the dispute, but with no obligation to represent me in court if the dispute is not resolved;
+  % endif
+  % if limited_options['fill_form']:
+  * Help fill out legal forms; 
+  % endif
+  % if limited_options['prep_docs']:
+  * Prepare documents or court papers for me to file on my own;
+  % endif
+  % if defined('other_detail'):
+  * Other - ${ other_detail }
+  % endif
+  % endif
+  
+  Finally, the retainer agreement has the following terms:
+
+  % if citizen:
+  * You are a U.S. Citizen;
+  % endif
+  * **{Free Services, Costs and Payments}**;
+  * **{Settlement Decisions}**;
+  * **{Right to End Representation}**;
+  * **{Confidentiality and Disclosure of Information}**;
+  * **{Accurate Information, New Information and Changes in Information}**;
+  * **{Legal Aid’s Right to End Representation}**;
+  * **{Right to Make a Complaint}**;
+  * **{Communication with Opposing Party}**;
+  * **{Copy of Agreement}**
+  
+  % if retainer == 'english':
+  % if defined('limited_options'):
+  You can also view a blank, unsigned copy of the retainer [here](${url_of('limited_sample.pdf')})
+  % else:
+  You can also view a blank, unsigned copy of the retainer [here](${url_of('full_sample.pdf')})
+  % endif
+  % elif retainer == 'spanish':
+  % if defined('limited_options'):
+  You can also view a blank, unsigned copy of the retainer [here](${url_of('limited_spanish_sample.pdf')})
+  % else:
+  You can also view a blank, unsigned copy of the retainer [here](${url_of('full_spanish_sample.pdf')})
+  % endif
+  % endif
+
+  ---
+
+field: client_review
+Buttons:
+  - I Agree: agree
+  - I Reject: reject
+under: |
+  **Note**: Rejecting the terms does not force the ${ role } to alter the scope of representation.
+  A notice will be sent to the ${ role } notifying them you do not accept the terms and this
+  interview will close.
+---
+ga id: clientSignature
+question: |
+  How would you like your name signed?
+subquestion: |
+  % if defined('custodian.name.first'):
+  **Typed** will insert '/s/ ${ custodian.name.full() }'
+  % else:
+  **Typed** will insert '/s/ ${ c.name.full()}'
+  % endif
+
+  **Digitally Sign** will allow you to use the mouse, trackpad,
+  or finger (device depending) to sign your name
+field: c_method
+choices:
+  - Type: type
+  - Digitally Sign: sign
+under: |
+  After you sign the retainer a copy will be provided to both you and your ${ role }.
+---
+ga id: clientDigitalSignature
+question: |
+  Please sign
+signature: c.signature
+under: |
+  % if defined('custodian.name.first'):
+  ${ custodian.name.full() }
+  % else:
+  ${ c.name.full() }
+  % endif
+---
+event: attorney_final
+question: |
+  Email Sent - Done for now
+subquestion: |
+  An email has been sent to ${ c.email } for them to 
+  review the terms and sign.  Once signed, a copy will
+  be sent to your email: ${ a.email }
+action buttons:
+  - label: Leave
+    action: https://www.lawv.net
+    color: warning
+    icon: sign-out-alt
+need:
+  - attorney_setup
+---
+ga id: retainerComplete
+event: final_screen
+question: |
+  Thank You
+subquestion: |
+  % if client_emailed and attorney_emailed:
+  Thank you for completing the signature. 
+  
+  A copy will be sent to your email: ${ c.email },
+  and to your ${ role }.
+  % else:
+  There was a problem sending the e-mail.
+  % endif
+action buttons:
+  - label: Exit
+    action: https://www.lawv.net
+    color: danger
+    icon: sign-out-alt
+---
+ga id: rejectRetainer
+event: reject
+question: |
+  You have rejected the retainer
+subquestion: |
+  A notification will be sent to your ${ role }.
+action buttons:
+  - label: Exit
+    action: https://www.lawv.net
+    color: danger
+    icon: sign-out-alt
+---
+code: |
+  if retainer == 'english':
+    if legal_retainer == 'Full':
+      client_emailed = send_email(to=c,attachments=full,template=see_attached)
+    elif legal_retainer == 'Limited':
+      client_emailed = send_email(to=c,attachments=limited,template=see_attached)
+  elif retainer == 'spanish':
+    if legal_retainer == 'Full':
+      client_emailed = send_email(to=c,attachments=full_spanish,template=see_attached)
+    elif legal_retainer == 'Limited':
+      client_emailed = send_email(to=c,attachments=limited_spanish,template=see_attached)
+  elif retainer == 'fast':
+    client_emailed = send_email(to=c,attachments=fast,template=see_attached)
+  elif retainer == 'bha':
+    client_emailed = send_email(to=c,attachments=bha,template=see_attached)  
+---
+code: |
+  if defined('b'):
+    if retainer == 'english':
+      if legal_retainer == 'Full':
+        attorney_emailed = send_email(to=a,cc=b,attachments=full,template=behalf_attached)
+      elif legal_retainer == 'Limited':
+        attorney_emailed = send_email(to=a,cc=b,attachments=limited,template=behalf_attached)
+    elif retainer == 'spanish':
+      if legal_retainer == 'Full':
+        attorney_emailed = send_email(to=a,cc=b,attachments=full_spanish,template=behalf_attached)
+      elif legal_retainer == 'Limited':
+        attorney_emailed = send_email(to=a,cc=b,attachments=limited_spanish,template=behalf_attached)
+    elif retainer == 'fast':
+      attorney_emailed = send_email(to=a,cc=b,attachments=fast,template=behalf_attached)
+    elif retainer == 'bha':
+      attorney_emailed = send_email(to=a,cc=b,attachments=bha,template=behalf_attached)
+  else:
+    if retainer == 'english':
+      if legal_retainer == 'Full':
+        attorney_emailed = send_email(to=a,attachments=full,template=see_attached)
+      elif legal_retainer == 'Limited':
+        attorney_emailed = send_email(to=a,attachments=limited,template=see_attached)
+    elif retainer == 'spanish':
+      if legal_retainer == 'Full':
+        attorney_emailed = send_email(to=a,attachments=full_spanish,template=see_attached)
+      elif legal_retainer == 'Limited':
+        attorney_emailed = send_email(to=a,attachments=limited_spanish,template=see_attached)
+    elif retainer == 'fast':
+      attorney_emailed = send_email(to=a,attachments=fast,template=see_attached)
+    elif retainer == 'bha':
+      attorney_emailed = send_email(to=a,attachments=bha,template=see_attached)
+---
+event: ineligible
+question: |
+  It appears you encountered a problem
+subquestion: |  
+  Reason: ${ failure_reason }  
+buttons: 
+  - Exit: exit
+  - Restart: restart
+---
+ga id: challengeFail
+event: challenge_fail
+question: |
+  It appears you encountered a problem
+subquestion: |  
+  Reason: ${ failure_reason }  
+action buttons:
+  - label: Exit
+    action: https://www.legalaidwv.org
+    color: danger
+    icon: sign-out-alt
+back button: True
+back button label: |
+  Wait, go back
+---
+template: notification
+subject: |
+  A document is awaiting your signature.
+content: |
+  Dear ${ c.name.full() },
+  
+  ${ role } ${ a.name.full() } has created a document that requires your signature.
+  After you sign it, a copy will be emailed to you for your records.
+
+  Please click the following URL:
+
+  [${ interview_url() }](${ interview_url() })
+
+  Legal Aid of West Virginia
+
+  *NOTE: This email address is not monitored.  Please do not reply to this message.  
+  Contact your attorney or paralegal through your normal method of communication.*
+---
+template: client_reject
+subject: |
+  ${ c.name.full() } has rejected the document.
+content: |
+  Dear ${ a.name.full() },
+  
+  ${ c.name.full() } has rejected the document.  Please contact them.
+
+  Legal Aid of West Virginia
+---
+template: see_attached
+subject: |
+  A document has been created.
+content: |
+  Please see the attached signed document.
+
+  *NOTE: This email address is not monitored.  Please do not reply to this message.  
+  Contact your attorney or paralegal through your normal method of communication.*
+---
+template: behalf_attached
+subject: |
+  A document has been created.
+content: |
+  ${ b.name.full() } has created a document on behalf of ${ a.name.full() } for ${ c.name.full() }.
+
+  The document has been attached and should be retained for your records.  A copy of the document has
+  been sent to ${ c.name.full() } at ${ c.email }.
+---
+attachment:
+  - name: Full Retainer Agreement
+    filename: ${ c.name.full() } Full Retainer
+    pdf template file: full.pdf
+    editable: False
+    variable name: full
+    fields:
+      - "date_1": |
+          ${ date.format() if citizen == True else '' }
+      - "client_signature_1": |
+          ${ c.signature if citizen == True else '' }
+      - "client_signature_text_1": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' and citizen == True else ''}
+      - "scope": ${ legal_scope }
+      - "client_signature_2": ${ c.signature }
+      - "client_signature_text_2": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' else '' }
+      - "date": ${ date.format() }
+      - "attorney_signature": ${ a.signature }
+      - "attorney_signature_text": |
+          ${ '/s/ ' + a.name.full() if a_method == 'type' else '' }
+      - "attny_date": ${ attny_date.format() }
+---
+attachment:
+  - name: Full Retainer Agreement
+    filename: ${ c.name.full() } Full Retainer
+    pdf template file: full_spanish.pdf
+    editable: False
+    variable name: full_spanish
+    fields:
+      - "date_1": |
+          ${ date.format() if citizen == True else '' }
+      - "client_signature_1": |
+          ${ c.signature if citizen == True else '' }
+      - "client_signature_text_1": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' and citizen == True else ''}
+      - "scope": ${ legal_scope }
+      - "client_signature_2": ${ c.signature }
+      - "client_signature_text_2": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' else '' }
+      - "date": ${ date.format() }
+      - "attorney_signature": ${ a.signature }
+      - "attorney_signature_text": |
+          ${ '/s/ ' + a.name.full() if a_method == 'type' else '' }
+      - "attny_date": ${ attny_date.format() }
+---
+attachment:
+  - name: Limited Retainer Agreement
+    filename: ${ c.name.full() } Limited Retainer
+    pdf template file: limited.pdf
+    editable: False
+    variable name: limited
+    fields:
+      - "date_1": |
+          ${ date.format() if citizen == True else '' }
+      - "client_signature_1": |
+          ${ c.signature if citizen == True else '' }
+      - "client_signature_text_1": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' and citizen == True else ''}
+      - "advice": ${ limited_options['advice'] }
+      - "fill_form": ${ limited_options['fill_form'] }
+      - "investigate": ${ limited_options['investigate'] }
+      - "prep_docs": ${ limited_options['prep_docs'] }
+      - "contact": ${ limited_options['contact'] }
+      - "other": ${ limited_options['other'] }
+      - "other_detail": |
+          ${ other_detail if limited_options['other'] else '' }
+      - "scope": ${ legal_scope }
+      - "client_signature_2": ${ c.signature }
+      - "client_signature_text_2": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' else '' }
+      - "date": ${ date.format() }
+      - "attorney_signature": ${ a.signature }
+      - "attorney_signature_text": |
+          ${ '/s/ ' + a.name.full() if a_method == 'type' else '' }
+      - "attny_date": ${ attny_date.format() }
+---
+attachment:
+  - name: Limited Retainer Agreement
+    filename: ${ c.name.full() } Limited Retainer
+    pdf template file: limited_spanish.pdf
+    editable: False
+    variable name: limited_spanish
+    fields:
+      - "date_1": |
+          ${ date.format() if citizen == True else '' }
+      - "client_signature_1": |
+          ${ c.signature if citizen == True else '' }
+      - "client_signature_text_1": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' and citizen == True else ''}
+      - "advice": ${ limited_options['advice'] }
+      - "fill_form": ${ limited_options['fill_form'] }
+      - "investigate": ${ limited_options['investigate'] }
+      - "prep_docs": ${ limited_options['prep_docs'] }
+      - "contact": ${ limited_options['contact'] }
+      - "other": ${ limited_options['other'] }
+      - "other_detail": |
+          ${ other_detail if limited_options['other'] else '' }
+      - "scope": ${ legal_scope }
+      - "client_signature_2": ${ c.signature }
+      - "client_signature_text_2": |
+          ${ '/s/ ' + c.name.full() if c_method == 'type' else '' }
+      - "date": ${ date.format() }
+      - "attorney_signature": ${ a.signature }
+      - "attorney_signature_text": |
+          ${ '/s/ ' + a.name.full() if a_method == 'type' else '' }
+      - "attny_date": ${ attny_date.format() }
+---
+attachment:
+  - name: FAST Advocate Retainer Agreement
+    filename: ${ c.name.full() } FAST Retainer
+    pdf template file: fast.pdf
+    editable: False
+    variable name: fast
+    fields:
+      - "date_1": |
+          ${ date.format() if citizen == True else '' }
+      - "client_signature_1": |
+          ${ c.signature if citizen == True else '' }
+      - "client_signature_text_1": |
+          ${ c.signature if citizen == True else ''}
+      - "child_name": ${ c.name.full() }
+      - "advice": ${ fast_options['advice'] }
+      - "review": ${ fast_options['review'] }
+      - "review_complaint": ${ fast_options['review_complaint'] }
+      - "spec_ed": ${ fast_options['spec_ed'] }
+      - "iep": ${ fast_options['iep'] }
+      - "behavior": ${ fast_options['behavior'] }
+      - "file_complaint": ${ fast_options['file_complaint'] }
+      - "meeting": ${ fast_options['meeting'] }
+      - "other": ${ fast_options['other'] }
+      - "other_detail": |
+          ${ fast_other_detail if fast_options['other'] else '' }
+      - "initials": |
+          ${ custodian.name.first[0].capitalize() + custodian.name.last[0].capitalize() if custodian_present else c.name.first[0].capitalize() + c.name.last[0].capitalize() }
+      - "parent_initials": |
+          ${ custodian.name.first[0].capitalize() + custodian.name.last[0].capitalize() if custodian_present else '' }
+      - "client_name": |
+          ${ custodian.name.full() if custodian_present else c.name.full() }
+      - "client_signature_text_2": |
+          ${ c.signature }
+      - "client_signature_2": |
+          ${ c.signature }
+      - "date": ${ date.format() }            
+      - "attorney_signature": ${ a.signature }
+      - "attorney_signature_text": |
+          ${ '/s/ ' + a.name.full() if a_method == 'type' else '' }
+      - "attny_date": ${ attny_date.format() }
+---
+attachment:
+  - name: BHA Advocate Retainer Agreement
+    filename: ${ c.name.full() } BHA Retainer
+    pdf template file: bha.pdf
+    editable: False
+    variable name: bha
+    fields:
+      - "date_1": |
+          ${ date.format() if citizen == True else '' }
+      - "client_signature_1": |
+          ${ c.signature if citizen == True else '' }
+      - "client_signature_text_1": |
+          ${ c.signature if citizen == True else ''}
+      - "name": ${ c.name.full() }
+      - "mental": ${ bha_options['mental'] }
+      - "housing": ${ bha_options['housing'] }
+      - "ssa": ${ bha_options['ssa'] }
+      - "payment": ${ bha_options['payment'] }
+      - "treatment": ${ bha_options['treatment'] }
+      - "other": ${ bha_options['other'] }
+      - "other_detail": |
+          ${ fast_other_detail if bha_options['other'] else '' }
+      - "initials": |
+          ${ custodian.name.first[0].capitalize() + custodian.name.last[0].capitalize() if custodian_present else c.name.first[0].capitalize() + c.name.last[0].capitalize() }
+      - "guardian_initials": |
+          ${ custodian.name.first[0].capitalize() + custodian.name.last[0].capitalize() if custodian_present else '' }
+      - "client_signature_text_2": |
+          ${ c.signature }
+      - "client_signature_2": |
+          ${ c.signature }
+      - "date": ${ date.format() }            
+      - "attorney_signature": ${ a.signature }
+      - "attorney_signature_text": |
+          ${ '/s/ ' + a.name.full() if a_method == 'type' else '' }
+      - "attny_date": ${ attny_date.format() }
+---
+code: |
+  role_select
+  if role_select == "advocate":
+    role = "Advocate"
+  elif role_select == "para_behalf":
+    role = "Advocate"
+    b.name.first
+  elif role_select == "para_self":
+    role = "Paralegal"
+  elif role_select == "la_attorney":
+    role = "Advocate"
+    b.name.first
+  elif role_select == "la_para":
+    role = "Paralegal"
+    b.name.first
+  a.name.first
+  c.name.first
+  citizen
+  if not citizen:
+    reminder
+  retainer
+  if retainer == 'english' or retainer == 'spanish':    
+    legal_retainer
+    legal_scope
+    if legal_retainer == 'Limited':
+      limited_options
+  elif retainer == 'fast':
+    custodian_present
+    fast_options
+  elif retainer == 'bha':
+    custodian_present
+    bha_options
+  attny_date = current_datetime()
+  a_method
+  if a_method == 'type':
+    a.signature = '/s/' + a.name.full()
+  a.signature
+  send_email(to=c,template=notification)
+  attorney_setup = True
+  prevent_going_back()
+  force_ask('attorney_final')
+---
+code: |
+  if c.birthdate.format() == challenge.format():
+    birthdays_match = True
+  else:
+    birthdays_match = False
