@@ -10,7 +10,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2023-09-29
+  revision_date: 2023-10-17
 ---
 features:
   javascript: docassemble.LAWVCommon:data/static/force_lightmode.js
@@ -43,7 +43,7 @@ terms:
     available all the information I have relating to my case or my legal questions. As a client of Legal Aid 
     of West Virginia, my information is confidential. Confidential information will not be disclosed to 
     anyone who is not on the staff of Legal Aid of West Virginia without my permission, except as permitted 
-    or required by the Rules of Professional Conduct, the legal ethics rules of West Virginia.Legal Aid 
+    or required by the Rules of Professional Conduct, the legal ethics rules of West Virginia. Legal Aid 
     of WV may ask attorneys to assist me through its Pro Bono Program. I authorize Legal Aid of WV to 
     share my information with these attorneys or firms.
   Accurate Information, New Information and Changes in Information: |
@@ -596,7 +596,7 @@ subquestion: |
   be sent to your email: ${ a.email }
 action buttons:
   - label: Leave
-    action: https://www.lawv.net
+    action: https://legalaidwv.org/
     color: warning
     icon: sign-out-alt
 need:
@@ -617,7 +617,7 @@ subquestion: |
   % endif
 action buttons:
   - label: Exit
-    action: https://www.lawv.net
+    action: https://legalaidwv.org/
     color: danger
     icon: sign-out-alt
 ---
@@ -629,7 +629,7 @@ subquestion: |
   A notification will be sent to your ${ role }.
 action buttons:
   - label: Exit
-    action: https://www.lawv.net
+    action: https://legalaidwv.org/
     color: danger
     icon: sign-out-alt
 ---
