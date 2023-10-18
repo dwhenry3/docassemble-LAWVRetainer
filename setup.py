@@ -44,7 +44,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.LAWVRetainer',
-      version='1.5.5',
+      version='1.5.6',
       description=('A docassemble extension to utilizing a multi-part interview to create either a 1) Legal, 2) Spanish, 3) FAST, or 4) BHA retainer'),
       long_description='Multi-part interview for creating one of 4 retainers (Legal, Spanish Legal, FAST, or BHA) and allowing for Citizen/Non-Citizen as well as for Custodian signature on behalf of the client for FAST and BHA retainers.',
       long_description_content_type='text/markdown',
