@@ -1,6 +1,6 @@
 import os
 import sys
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 from fnmatch import fnmatchcase
 from distutils.util import convert_path
 
@@ -44,7 +44,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
     return out
 
 setup(name='docassemble.LAWVRetainer',
-      version='1.5.6',
+      version='2.0.0',
       description=('A docassemble extension to utilizing a multi-part interview to create either a 1) Legal, 2) Spanish, 3) FAST, or 4) BHA retainer'),
       long_description='Multi-part interview for creating one of 4 retainers (Legal, Spanish Legal, FAST, or BHA) and allowing for Citizen/Non-Citizen as well as for Custodian signature on behalf of the client for FAST and BHA retainers.',
       long_description_content_type='text/markdown',
@@ -52,8 +52,7 @@ setup(name='docassemble.LAWVRetainer',
       author_email='dhenry@lawv.net',
       license='The MIT License (MIT)',
       url='https://docassemble.org',
-      packages=find_packages(),
-      namespace_packages=['docassemble'],
+      packages=find_namespace_packages(),
       install_requires=[],
       zip_safe=False,
       package_data=find_package_data(where='docassemble/LAWVRetainer/', package='docassemble.LAWVRetainer'),
