@@ -10,7 +10,7 @@ metadata:
   authors:
     - name: Dane W. Henry, Esq.
       organization: Legal Aid of West Virginia, Inc.
-  revision_date: 2025-07-15
+  revision_date: 2026-02-04
   unlisted: True
 ---
 features:
@@ -103,7 +103,7 @@ terms:
     request services in the future.
   Right to a complaint: |
     I understand that I have a right to file a complaint about the services I am receiving.
-  Legal Aid's right to discontinue: |
+  Legal Aid right to discontinue: |
     Legal Aid of West Virginia may discontinue advocacy services or stop representing me before the completion of my 
     case, but only when there is a good reason for doing that. Good reason includes but is not limited to; if I do not 
     provide complete or truthful information about my case, don't stay in touch with Legal Aid or if I do not report 
@@ -208,10 +208,6 @@ question: |
 subquestion: |
   Information about the client is used to make sure
   the person who receives the retainer is the client
-
-  **For BHA/FAST: If the client is a minor or under a guardianship, 
-  still put the client's name/birthdate here.  You will have the opportunity to
-  specify the custodian's name later in the process.**
 fields:
   - First Name: c.name.first
   - Last Name: c.name.last
@@ -415,9 +411,13 @@ under: |
 ga id: clientBirthday
 question: |
   % if defined('custodian.name.first'):
-  Please enter the client's birthday
+  Please enter the **client's** birthday
   % else:
   Please enter your birthday
+  % endif
+subquestion: |
+  % if defined('custodian.name.first'):
+  Note: If the client is a minor, use their birthdate and not yours.
   % endif
 fields:
   - no label: challenge
@@ -475,7 +475,7 @@ subquestion: |
   * **{Changes to information}**;
   * **{Right to discontinue}**;
   * **{Right to a complaint}**;
-  * **{Legal Aid's right to discontinue}**;
+  * **{Legal Aid right to discontinue}**;
   % if custodian_present == True:
   * **{Child or dependent as FAST client}**;
   % endif
@@ -537,7 +537,7 @@ subquestion: |
   * **{Changes to information}**;
   * **{Right to discontinue}**;
   * **{Right to a complaint}**;
-  * **{Legal Aid's right to discontinue}**;
+  * **{Legal Aid right to discontinue}**;
   % if custodian_present == True:
   * **{Child or dependent as BHA client}**;
   * **{Provide documentation}**;

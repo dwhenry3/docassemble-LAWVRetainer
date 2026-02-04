@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "docassemble.LAWVRetainer"
-version = "2.0.2"
+version = "2.0.3"
 description = "A docassemble extension to utilizing a multi-part interview to create either a 1) Legal, 2) Spanish, 3) FAST, or 4) BHA retainer"
 readme = "README.md"
 authors = [
